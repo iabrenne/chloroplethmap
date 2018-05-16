@@ -1,6 +1,7 @@
 const w = 1500;
 const h = 750;
 const geoPath = d3.geoPath();
+var geojson = topojson.feature(geoTopology, geoTopology.objects.counties);
 
 //Create SVG element
 const svg = d3.select("body")
@@ -10,5 +11,4 @@ const svg = d3.select("body")
 
            svg
            .append("path")
-           .attr("d",geoPath(geoTopology.objects.counties));
-
+           .attr("d",geoPath(geojson));
