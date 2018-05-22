@@ -10,9 +10,9 @@ const svg = d3.select("body")
            .attr("height",h);
 
            svg
-           .append("g")
-             .attr("class", "county")
+           .append("g")             
            .selectAll("path")
            .data(geojson.features)
            .enter().append("path")
-             .attr("d",geoPath);
+             .attr("d",geoPath)
+             .attr("class", "county");
