@@ -75,15 +75,12 @@ svg.append("g")
    .attr("id","legend")
    .attr("transform","translate(900,600)");
 
-
-
-// create a legend
 const legend = d3.legendColor()                 
                  .labels( function({i, genLength}){ 
                             return d3.format(".2f")( ( maxEducation - minEducation ) / genLength  * (i+1)); 
                         })
-                 .shapeWidth(40)
-                 .shapeHeight(40)
+                 .shape("circle")
+                 .shapeRadius(20)
                  .orient("horizontal")
                  .scale(quantile);
 
