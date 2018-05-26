@@ -20,13 +20,13 @@ const quantile = d3.scaleQuantile()
                    .domain([minEducation,maxEducation])
                    .range(colorRanges);
 
-const returnEductionData = d => {
+const getCountyElement = d => {
 
   let el =  educationData.find(function(element) {
     return (element.fips == d.id) ;                  
   });
 
-  return el.bachelorsOrHigher;
+  return el;
 
 };
 
@@ -43,10 +43,10 @@ const svg = d3.select("body")
            .data(geojson.features)
            .enter().append("path")
            .attr("d",geoPath)
-           .attr("fill",d => quantile(returnEductionData(d)) )
+           .attr("fill",d => quantile(getCountyElement(d).bachelorsOrHigher ) )
            .attr("class", "county")
            .attr("data-fips", d => d.id)
-           .attr("data-education", d => returnEductionData(d))
+           .attr("data-education", d => getCountyElement(d).bachelorsOrHigher)
            .on("mouseover",(d)=>{ 
 
               let tooltipElem = document.getElementById("tooltip");          
@@ -55,7 +55,7 @@ const svg = d3.select("body")
   //            tooltipElem.innerText = `${getMonth(d.month)} ${d.year}\n` ;
 
               tooltipElem.innerText = `${d.id}\n` ;
-              tooltipElem.setAttribute("data-education", returnEductionData(d));
+              tooltipElem.setAttribute("data-education", getCountyElement(d).bachelorsOrHigher );
           
               tooltipElem.style.left= d3.event.clientX + "px";
               tooltipElem.style.top = d3.event.clientY + "px";
