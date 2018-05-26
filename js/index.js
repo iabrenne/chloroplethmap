@@ -51,10 +51,9 @@ const svg = d3.select("body")
 
               let tooltipElem = document.getElementById("tooltip");          
               tooltipElem.style.display = "block";
-              
-  //            tooltipElem.innerText = `${getMonth(d.month)} ${d.year}\n` ;
 
-              tooltipElem.innerText = `${d.id}\n` ;
+              tooltipElem.innerText 
+                = `${getCountyElement(d).area_name}, ${getCountyElement(d).state}:  ${getCountyElement(d).bachelorsOrHigher}%\n` ;
               tooltipElem.setAttribute("data-education", getCountyElement(d).bachelorsOrHigher );
           
               tooltipElem.style.left= d3.event.clientX + "px";
