@@ -2,14 +2,32 @@ const w = 1500;
 const h = 750;
 const geoPath = d3.geoPath();
 const geojson = topojson.feature(geoTopology, geoTopology.objects.counties);
+const minEducation = d3.min(educationData, d => d.bachelorsOrHigher);
+const maxEducation = d3.max(educationData, d => d.bachelorsOrHigher);
 
+const colorRanges = ["rgb(102, 102, 51)",
+                     "rgb(153, 204, 0)",
+                     "rgb(204, 255, 51)",
+                     "rgb(255, 255, 102)",
+                     "rgb(255, 204, 102)",
+                     "rgb(255, 153, 102)",
+                     "rgb(255, 102, 102)",
+                     "rgb(255, 0, 102)",
+                     "rgb(204, 102, 153)",
+                     "rgb(153, 51, 102)"];
+
+const quantile = d3.scaleQuantile()
+                   .domain([minEducation,maxEducation])
+                   .range(colorRanges);
 
 const returnEductionData = d => {
+
   let el =  educationData.find(function(element) {
     return (element.fips == d.id) ;                  
   });
 
-return el.bachelorsOrHigher;
+  return el.bachelorsOrHigher;
+
 };
 
 
@@ -56,3 +74,18 @@ const svg = d3.select("body")
 svg.append("g")
    .attr("id","legend")
    .attr("transform","translate(900,600)");
+
+
+
+// create a legend
+const legend = d3.legendColor()                 
+                 .labels( function({i, genLength}){ 
+                            return d3.format(".2f")( ( maxEducation - minEducation ) / genLength  * (i+1)); 
+                        })
+                 .shapeWidth(40)
+                 .shapeHeight(40)
+                 .orient("horizontal")
+                 .scale(quantile);
+
+svg.select("#legend")
+   .call(legend);
