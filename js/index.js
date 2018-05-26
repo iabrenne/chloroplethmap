@@ -43,6 +43,7 @@ const svg = d3.select("body")
            .data(geojson.features)
            .enter().append("path")
            .attr("d",geoPath)
+           .attr("fill",d => quantile(returnEductionData(d)) )
            .attr("class", "county")
            .attr("data-fips", d => d.id)
            .attr("data-education", d => returnEductionData(d))
@@ -56,8 +57,8 @@ const svg = d3.select("body")
               tooltipElem.innerText = `${d.id}\n` ;
               tooltipElem.setAttribute("data-education", returnEductionData(d));
           
-              // tooltipElem.style.left= (xScale(d.year) + tooltipOffsetHorizontal) + "px";
-              // tooltipElem.style.top = (yScale(d.month) + tooltipOffsetVertical) + "px";
+              tooltipElem.style.left= d3.event.clientX + "px";
+              tooltipElem.style.top = d3.event.clientY + "px";
           
           })
             .on("mouseout",()=>{ 
@@ -80,7 +81,7 @@ const legend = d3.legendColor()
                             return d3.format(".2f")( ( maxEducation - minEducation ) / genLength  * (i+1)); 
                         })
                  .shape("circle")
-                 .shapeRadius(20)
+                 .shapeRadius(21)
                  .orient("horizontal")
                  .scale(quantile);
 
