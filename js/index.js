@@ -49,3 +49,10 @@ const svg = d3.select("body")
                 tooltipElem.style.display = "none";
             
             });
+
+
+// Create a legend
+
+svg.append("g")
+   .attr("id","legend")
+   .attr("transform","translate(900,600)");
