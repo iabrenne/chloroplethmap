@@ -79,8 +79,9 @@ const legend = d3.legendColor()
                  .labels( function({i, genLength}){ 
                             return d3.format(".2f")( ( maxEducation - minEducation ) / genLength  * (i+1)); 
                         })
-                 .shape("circle")
-                 .shapeRadius(21)
+                 .shape("rect")
+                 .shapeHeight(20)
+                 .shapeWidth(40)
                  .orient("horizontal")
                  .scale(quantile);
 
