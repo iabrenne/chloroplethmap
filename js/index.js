@@ -1,20 +1,18 @@
 const w = 1500;
-const h = 750;
+const h = 900;
 const geoPath = d3.geoPath();
 const geojson = topojson.feature(geoTopology, geoTopology.objects.counties);
 const minEducation = d3.min(educationData, d => d.bachelorsOrHigher);
 const maxEducation = d3.max(educationData, d => d.bachelorsOrHigher);
 
-const colorRanges = ["rgb(102, 102, 51)",
-                     "rgb(153, 204, 0)",
-                     "rgb(204, 255, 51)",
-                     "rgb(255, 255, 102)",
-                     "rgb(255, 204, 102)",
-                     "rgb(255, 153, 102)",
-                     "rgb(255, 102, 102)",
-                     "rgb(255, 0, 102)",
-                     "rgb(204, 102, 153)",
-                     "rgb(153, 51, 102)"];
+const colorRanges = ["rgb(255, 209, 220)",
+                     "rgb(255, 192, 203)",
+                     "rgb(255, 183, 197)",
+                     "rgb(252, 142, 172)",
+                     "rgb(231, 84,	128	)",
+                     "rgb(222, 93,	131)",
+                     "rgb(222, 49,  99)",
+                     "rgb(227, 11, 93)" ];
 
 const quantile = d3.scaleQuantile()
                    .domain([minEducation,maxEducation])
@@ -73,16 +71,19 @@ const svg = d3.select("body")
 
 svg.append("g")
    .attr("id","legend")
-   .attr("transform","translate(900,600)");
+   .attr("transform","translate(900,300)");
 
 const legend = d3.legendColor()                 
                  .labels( function({i, genLength}){ 
-                            return d3.format(".2f")( ( maxEducation - minEducation ) / genLength  * (i+1)); 
+                            let educationRange = (maxEducation - minEducation ) / genLength ;                            
+                            let endOfRange = educationRange * (i+1);
+                            let startOfRange = (i==0) ? minEducation : endOfRange  - educationRange;
+                            return `${d3.format(".2f")(startOfRange)}%- ${d3.format(".2f")(endOfRange)}% `; 
                         })
                  .shape("rect")
                  .shapeHeight(20)
                  .shapeWidth(40)
-                 .orient("horizontal")
+                 .orient("vertical")
                  .scale(quantile);
 
 svg.select("#legend")
