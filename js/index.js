@@ -73,6 +73,17 @@ svg.append("g")
    .attr("id","legend")
    .attr("transform","translate(900,300)");
 
+svg.append("text")
+    .attr("x", (w/3))   
+    .attr("id","graph-title")     
+    .style("font-family","Georgia,Serif")     
+    .attr("y", 22)
+    .attr("text-anchor", "middle")  
+    .style("font-size", "24px") 
+    .style("font-weight","bold")
+    .style("text-decoration", "underline")  
+    .text("United States Educational Attainment");
+
 const legend = d3.legendColor()                 
                  .labels( function({i, genLength}){ 
                             let educationRange = (maxEducation - minEducation ) / genLength ;                            
@@ -88,3 +99,7 @@ const legend = d3.legendColor()
 
 svg.select("#legend")
    .call(legend);
+
+// Add title
+
+
