@@ -1,5 +1,5 @@
-const w = 1500;
-const h = 900;
+const w = 1200;
+const h = 600;
 const geoPath = d3.geoPath();
 const geojson = topojson.feature(geoTopology, geoTopology.objects.counties);
 const minEducation = d3.min(educationData, d => d.bachelorsOrHigher);
@@ -33,7 +33,14 @@ const getCountyElement = d => {
 const svg = d3.select("body")
            .append("svg")
            .attr("width", w)
-           .attr("height",h);
+           .attr("height",h)
+           .attr("class","w3-card-2")
+           .attr("class","w3-2017-shaded-spruce")
+           .attr("display","block")
+           .style("margin","auto")
+           .style("margin-top","80px")
+        //   .style("background-color","cadetblue");
+           ;
 
            svg
            .append("g")             
@@ -74,14 +81,15 @@ svg.append("g")
    .attr("transform","translate(900,300)");
 
 svg.append("text")
-    .attr("x", (w/3))   
+    .attr("x", (w/2))   
     .attr("id","graph-title")     
     .style("font-family","Georgia,Serif")     
-    .attr("y", 22)
+    .attr("y", 35)
     .attr("text-anchor", "middle")  
     .style("font-size", "24px") 
     .style("font-weight","bold")
     .style("text-decoration", "underline")  
+    .attr("fill","white")
     .text("United States Educational Attainment");
 
 const legend = d3.legendColor()                 
